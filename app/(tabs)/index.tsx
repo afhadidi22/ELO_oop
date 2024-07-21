@@ -1,5 +1,6 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
+import {  View, Text, Button, Image, StyleSheet, Platform } from 'react-native';
+import uuid from 'react-native-uuid';
+import QRCode from 'react-native-qrcode-svg';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -40,7 +41,7 @@ export default function HomeScreen() {
         <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
         <ThemedText>
           When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
+          <ThemedText type="defaultSemiBold">npm  reset-project</ThemedText> to get a fresh{' '}
           <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
