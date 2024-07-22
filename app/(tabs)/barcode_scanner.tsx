@@ -1,18 +1,22 @@
-import { CameraView, useCameraPermissions } from 'expo-camera';
+import { CameraView, useCameraPermissions, BarcodeScanningResult } from 'expo-camera';
 import { useState } from 'react';
+import { Camera, useCameraDevice, useCodeScanner, useCameraPermission } from 'react-native-vision-camera';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function App() {
-  const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
   const [data, setData] = useState("put scanned uuid here");
+  
+  const handleBarcodeScanned = (scanningResult: BarcodeScanningResult) => {
+    setData(scanningResult.data)
+  };
+  
+  
   if (!permission) {
-    // Camera permissions are still loading.
     return <View />;
   }
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet.
     return (
       <View style={styles.container}>
         <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
@@ -21,18 +25,11 @@ export default function App() {
     );
   }
 
-  function toggleCameraFacing() {
-    setFacing(current => (current === 'back' ? 'front' : 'back'));
-  }
-
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing}>
+      <CameraView style={styles.camera} barcodeScannerSettings={{barcodeTypes:['qr']}} onBarcodeScanned={handleBarcodeScanned}>
         <View style={styles.buttonContainer}>
             <Text style={styles.text}>Camera is {data}</Text>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
         </View>
       </CameraView>
     </View>
